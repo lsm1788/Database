@@ -4,26 +4,26 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import domain.ExamVO;
+import domain.SampleVO;
 import util.DbUtil;
 
-public class ExamDAO extends DbUtil {
+public class SampleDAO extends DbUtil {
 	/*
 	 * C:create() 등록하는 메소드
 	 * 접근지정자 : public
 	 * param : 등록될 값
 	 * return : 없음
 	 */
-	public void create (ExamVO vo) {
+	public void create (SampleVO vo) {
 		//코드작성
 		StringBuffer sql = new StringBuffer();
 		
 		PreparedStatement stmt = null;
 		Connection conn = null;
 		
-		sql.append("\n INSERT INTO exam ");
-		sql.append("\n (varcharTest, charTest, doubleTest, dateTest, dateTimeTest) ");
-		sql.append("\n VALUES (?, ?, ?, ?, ?) ");
+		sql.append("\n INSERT INTO sample ");
+		sql.append("\n (strData, sampleDate) ");
+		sql.append("\n VALUES (?, ?) ");
 		int idx = 1;
 		
 		try {
@@ -33,11 +33,8 @@ public class ExamDAO extends DbUtil {
 			stmt = conn.prepareStatement(sql.toString());
 			
 			//?에 값설정
-			stmt.setString(idx++, vo.getVarcharTest());
-			stmt.setString(idx++, vo.getCharTest());
-			stmt.setDouble(idx++, vo.getDoubleTest());
-			stmt.setDate(idx++, new Date(vo.getDateTest().getTime()));
-			stmt.setTimestamp(idx++, vo.getDateTimeTest());
+			stmt.setString(idx++, vo.getStrData());
+			stmt.setDate(idx++, new Date(vo.getSampleDate().getTime()));
 			
 			int res = stmt.executeUpdate();	//.executeUpdate <<-- 데이터 입력
 			//결과처리(Select문만 ResultSet 객체 리턴)
@@ -59,11 +56,11 @@ public class ExamDAO extends DbUtil {
 	public List read() {
 		//코드작성
 		StringBuffer sql = new StringBuffer();
-		sql.append(" SELECT * FROM exam ");
+		sql.append(" SELECT * FROM sample ");
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		List<ExamVO> list = new ArrayList<ExamVO>();
+		List<SampleVO> list = new ArrayList<SampleVO>();
 		try {
 		//DB연결
 		conn = getConn();
@@ -73,15 +70,12 @@ public class ExamDAO extends DbUtil {
 		//결과처리(Select문만 ResultSet 객체 리턴)
 		while(rs.next()) {
 			list.add(
-			new ExamVO(
+			new SampleVO(
 			rs.getInt("num"),
-			rs.getString("varcharTest"),
-			rs.getString("charTest"),
-			rs.getDouble("doubleTest"),
-			rs.getDate("dateTest"),
-			rs.getTimestamp("dateTimeTest")
+			rs.getString("strData"),
+			rs.getDate("sampleDate")
 			)
-					);
+			);
 		}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -92,14 +86,14 @@ public class ExamDAO extends DbUtil {
 		return list;
 	}
 	
-	public ExamVO read(ExamVO vo){
+	public SampleVO read(SampleVO vo){
 		//코드작성
 		StringBuffer sql = new StringBuffer();
-		sql.append(" SELECT * FROM exam WHERE num = ? ");
+		sql.append(" SELECT * FROM sample WHERE num = ? ");
 		
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		ExamVO examVo = null;
+		SampleVO sampleVo = null;
 		ResultSet rs = null;
 		try {
 			//연결
@@ -109,13 +103,10 @@ public class ExamDAO extends DbUtil {
 			stmt.setInt(1, vo.getNum());
 			rs = stmt.executeQuery();
 			if(rs.next()) {
-				examVo = new ExamVO(
+				sampleVo = new SampleVO(
 						rs.getInt("num"),
-						rs.getString("varcharTest"),
-						rs.getString("charTest"),
-						rs.getDouble("doubleTest"),
-						rs.getDate("dateTest"),
-						rs.getTimestamp("dateTimeTest")
+						rs.getString("strData"),
+						rs.getDate("sampleDate")
 						);
 			}
 			//ResultSet 객체생성
@@ -126,7 +117,7 @@ public class ExamDAO extends DbUtil {
 		}
 		//닫기
 		//코드작성 끝
-		return examVo;
+		return sampleVo;
 	}
 	/*
 	 * U:update() 수정하는 메소드
@@ -134,12 +125,11 @@ public class ExamDAO extends DbUtil {
 	 * param : 수정될 값
 	 * return : 없음
 	 */
-	public void update(ExamVO vo) {
+	public void update(SampleVO vo) {
 		//코드작성
 		StringBuffer sql = new StringBuffer();
-		sql.append(" UPDATE exam ");
-		sql.append(" SET varcharTest = ?, ");
-		sql.append(" doubleTest = ? ");
+		sql.append(" UPDATE sample ");
+		sql.append(" SET strData = ?, ");
 		sql.append(" WHERE num = ? ");
 		
 		Connection conn = null;
@@ -152,8 +142,7 @@ public class ExamDAO extends DbUtil {
 			//prepareStatement(SQL작성 실행)
 			stmt = conn.prepareStatement(sql.toString());
 			
-			stmt.setString(++idx, vo.getVarcharTest());
-			stmt.setDouble(++idx, vo.getDoubleTest());
+			stmt.setString(++idx, vo.getStrData());
 			stmt.setInt(++idx, vo.getNum());
 			
 			int res = stmt.executeUpdate();
@@ -172,10 +161,10 @@ public class ExamDAO extends DbUtil {
 	 * param : 삭제될 키 값
 	 * return : 없음
 	 */
-	public void delete(ExamVO vo) {
+	public void delete(SampleVO vo) {
 		//코드작성
 		StringBuffer sql = new StringBuffer();
-		sql.append("\n DELETE FROM exam WHERE num = ? ");		//삭제 명령어
+		sql.append("\n DELETE FROM sample WHERE num = ? ");		//삭제 명령어
 		
 		Connection conn = null;
 		PreparedStatement stmt = null;
