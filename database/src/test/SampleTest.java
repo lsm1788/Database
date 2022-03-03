@@ -1,9 +1,6 @@
 package test;
 
-import java.sql.Timestamp;
 import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
 
 import dao.SampleDAO;
 import domain.SampleVO;
@@ -11,10 +8,15 @@ import domain.SampleVO;
 public class SampleTest {
 
 	public static void main(String[] args) {
+		
 		SampleDAO dao = new SampleDAO();
+		SampleVO createVo = new SampleVO(0, "str문자", new Date());
+		
+		//데이터 생성
+		dao.create(createVo);		
+//		System.out.println(createVo);
+		
 		//Exam 테이블의 전체 데이터를 조회한다.
-		SampleVO createVo = new SampleVO(0, "가변폭문자열", new Date());
-//		
 //		List<SampleVO> list = dao.read();
 //		Iterator<SampleVO> it = list.iterator();
 //		while(it.hasNext()) {
@@ -26,34 +28,33 @@ public class SampleTest {
 //		}
 		//Exam 테이블의 전체 데이터를 조회했습니다.
 		
-//		System.out.println(createVo);
-		dao.create(createVo);
 		
-		//num컬럼이 2번인 데이터만 가지고 오기
-//		SampleVO readVo = new SampleVO();
-//		readVo.setNum(2);
-//		SampleVO readVoRes = dao.read(readVo);
+		//num컬럼이 n번인 데이터만 가지고 오기
+//		SampleVO vo2 = new SampleVO();
+//		vo2.setNum(1);
+//		SampleVO sampleVO = dao.read(vo2);
 //		
-//		if(readVoRes != null) {
-//		System.out.print(readVoRes.getNum()+"\t");
-//		System.out.print(readVoRes.getStrData()+"\t");
-//		System.out.print(readVoRes.getSampleDate()+"\t");
+//		if(sampleVO != null) {
+//		System.out.print(sampleVO.getNum()+"\t");
+//		System.out.print(sampleVO.getStrData()+"\t");
+//		System.out.print(sampleVO.getSampleDate()+"\t");
 //		}
-//		//num컬럼이 2번인 데이터만 가지고 왔습니다
+		//num컬럼이 n번인 데이터만 가지고 왔습니다
 		
-		//num컬럼이 2번인 데이터를 수정합니다.
+		
+		//num컬럼이 n번인 데이터를 수정합니다.
 //		SampleVO updateVo = new SampleVO();
-//		updateVo.setNum(2);
-//		updateVo.setStrData("바꿀값");
+//		updateVo.setNum(1);
+//		updateVo.setStrData("수정된문자");
 //		dao.update(updateVo);
-		//num컬럼이 2번인 데이터를 수정했습니다
+		//num컬럼이 n번인 데이터를 수정했습니다
+
 		
-		//num컬럼이 2번인 데이터를 삭제합니다
+		//num컬럼이 n번인 데이터를 삭제합니다
 //		SampleVO deleteVo = new SampleVO();
-//		deleteVo.setNum(2);
+//		deleteVo.setNum(1);
 //		dao.delete(deleteVo);
-		//num컬럼이 2번인 데이터를 삭제했습니다
+		//num컬럼이 n번인 데이터를 삭제했습니다
 		
 	}
-
 }

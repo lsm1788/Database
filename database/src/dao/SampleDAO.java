@@ -129,7 +129,7 @@ public class SampleDAO extends DbUtil {
 		//코드작성
 		StringBuffer sql = new StringBuffer();
 		sql.append(" UPDATE sample ");
-		sql.append(" SET strData = ?, ");
+		sql.append(" SET strData = ? ");
 		sql.append(" WHERE num = ? ");
 		
 		Connection conn = null;
