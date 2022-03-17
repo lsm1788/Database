@@ -56,7 +56,7 @@ public class ExamDAO extends DbUtil {
 	 * param : 조회할 값
 	 * return : List
 	 */
-	public List read() {
+	public List<ExamVO> read() {
 		//코드작성
 		StringBuffer sql = new StringBuffer();
 		sql.append(" SELECT * FROM exam ");
